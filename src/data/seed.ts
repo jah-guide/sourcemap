@@ -1,0 +1,130 @@
+import type { SourceMapCatalog } from '../types'
+
+/** Demo enterprise landscape — fictional names, representative integrations */
+export const seedCatalog: SourceMapCatalog = {
+  systems: [
+    {
+      id: 'sys-hris',
+      name: 'Human Resources Information System',
+      acronym: 'HRIS',
+      owner: 'People Operations',
+      domain: 'Workforce',
+      description: 'System of record for employee master data, org structure, and employment status.',
+      status: 'production',
+    },
+    {
+      id: 'sys-payroll',
+      name: 'Payroll Processing',
+      acronym: 'Payroll',
+      owner: 'Finance',
+      domain: 'Compensation',
+      description: 'Calculates pay runs, tax withholdings, and disbursements.',
+      status: 'production',
+    },
+    {
+      id: 'sys-lms',
+      name: 'Learning Management System',
+      acronym: 'LMS',
+      owner: 'Talent Development',
+      domain: 'Learning',
+      description: 'Course catalog, enrollments, and completion records for compliance training.',
+      status: 'production',
+    },
+    {
+      id: 'sys-crm',
+      name: 'Customer Relationship Management',
+      acronym: 'CRM',
+      owner: 'Revenue Operations',
+      domain: 'Sales',
+      description: 'Accounts, opportunities, and customer-facing employee assignments.',
+      status: 'production',
+    },
+    {
+      id: 'sys-dwh',
+      name: 'Enterprise Data Warehouse',
+      acronym: 'DWH',
+      owner: 'Data Platform',
+      domain: 'Analytics',
+      description: 'Consolidated reporting layer fed by operational systems.',
+      status: 'production',
+    },
+  ],
+  fields: [
+    { id: 'f-hris-emp-id', systemId: 'sys-hris', name: 'employee_id', dataType: 'UUID', description: 'Canonical employee identifier', nullable: false, pii: false },
+    { id: 'f-hris-email', systemId: 'sys-hris', name: 'work_email', dataType: 'string', description: 'Corporate email address', nullable: false, pii: true },
+    { id: 'f-hris-status', systemId: 'sys-hris', name: 'employment_status', dataType: 'enum', description: 'Active, terminated, leave', nullable: false, pii: false },
+    { id: 'f-hris-dept', systemId: 'sys-hris', name: 'department_code', dataType: 'string', description: 'Cost center / department', nullable: false, pii: false },
+    { id: 'f-hris-hire', systemId: 'sys-hris', name: 'hire_date', dataType: 'date', description: 'Original hire date', nullable: false, pii: false },
+
+    { id: 'f-pay-emp-id', systemId: 'sys-payroll', name: 'worker_ref', dataType: 'UUID', description: 'Foreign key to HRIS employee', nullable: false, pii: false },
+    { id: 'f-pay-status', systemId: 'sys-payroll', name: 'pay_status', dataType: 'enum', description: 'Eligible for pay run', nullable: false, pii: false },
+    { id: 'f-pay-dept', systemId: 'sys-payroll', name: 'gl_department', dataType: 'string', description: 'GL mapping for payroll journal', nullable: false, pii: false },
+
+    { id: 'f-lms-user', systemId: 'sys-lms', name: 'learner_email', dataType: 'string', description: 'Login and roster match key', nullable: false, pii: true },
+    { id: 'f-lms-active', systemId: 'sys-lms', name: 'account_active', dataType: 'boolean', description: 'Provisioning flag', nullable: false, pii: false },
+
+    { id: 'f-crm-owner-email', systemId: 'sys-crm', name: 'account_owner_email', dataType: 'string', description: 'Sales rep assignment', nullable: true, pii: true },
+    { id: 'f-crm-territory', systemId: 'sys-crm', name: 'territory_code', dataType: 'string', description: 'Derived from department', nullable: true, pii: false },
+
+    { id: 'f-dwh-emp', systemId: 'sys-dwh', name: 'dim_employee_key', dataType: 'UUID', description: 'Warehouse surrogate key', nullable: false, pii: false },
+    { id: 'f-dwh-status', systemId: 'sys-dwh', name: 'employment_status', dataType: 'string', description: 'SCD attribute from HRIS', nullable: false, pii: false },
+    { id: 'f-dwh-dept', systemId: 'sys-dwh', name: 'department_code', dataType: 'string', description: 'Org dimension attribute', nullable: false, pii: false },
+  ],
+  interfaces: [
+    {
+      id: 'if-hris-payroll',
+      name: 'HRIS → Payroll worker sync',
+      sourceSystemId: 'sys-hris',
+      targetSystemId: 'sys-payroll',
+      protocol: 'REST',
+      frequency: 'Every 15 minutes',
+      slaMinutes: 30,
+      notes: 'Delta feed on employment_status and department changes.',
+    },
+    {
+      id: 'if-hris-lms',
+      name: 'HRIS → LMS provisioning',
+      sourceSystemId: 'sys-hris',
+      targetSystemId: 'sys-lms',
+      protocol: 'Kafka',
+      frequency: 'Near real-time',
+      slaMinutes: 60,
+      notes: 'Creates/suspends learner accounts from work_email.',
+    },
+    {
+      id: 'if-hris-crm',
+      name: 'HRIS → CRM rep roster',
+      sourceSystemId: 'sys-hris',
+      targetSystemId: 'sys-crm',
+      protocol: 'SFTP',
+      frequency: 'Daily 02:00 UTC',
+      slaMinutes: 240,
+      notes: 'Batch file for sales-facing employees only.',
+    },
+    {
+      id: 'if-hris-dwh',
+      name: 'HRIS → DWH employee dimension',
+      sourceSystemId: 'sys-hris',
+      targetSystemId: 'sys-dwh',
+      protocol: 'DB sync',
+      frequency: 'Hourly',
+      slaMinutes: 90,
+      notes: 'Full dimension refresh with SCD Type 2 on status.',
+    },
+  ],
+  mappings: [
+    { id: 'map-1', interfaceId: 'if-hris-payroll', sourceFieldId: 'f-hris-emp-id', targetFieldId: 'f-pay-emp-id', transform: 'direct', critical: true },
+    { id: 'map-2', interfaceId: 'if-hris-payroll', sourceFieldId: 'f-hris-status', targetFieldId: 'f-pay-status', transform: 'ACTIVE→ELIGIBLE; TERMINATED→INELIGIBLE', critical: true },
+    { id: 'map-3', interfaceId: 'if-hris-payroll', sourceFieldId: 'f-hris-dept', targetFieldId: 'f-pay-dept', transform: 'lookup cost_center_map', critical: false },
+
+    { id: 'map-4', interfaceId: 'if-hris-lms', sourceFieldId: 'f-hris-email', targetFieldId: 'f-lms-user', transform: 'lowercase trim', critical: true },
+    { id: 'map-5', interfaceId: 'if-hris-lms', sourceFieldId: 'f-hris-status', targetFieldId: 'f-lms-active', transform: 'ACTIVE→true; else false', critical: true },
+
+    { id: 'map-6', interfaceId: 'if-hris-crm', sourceFieldId: 'f-hris-email', targetFieldId: 'f-crm-owner-email', transform: 'direct', critical: true },
+    { id: 'map-7', interfaceId: 'if-hris-crm', sourceFieldId: 'f-hris-dept', targetFieldId: 'f-crm-territory', transform: 'dept_to_territory()', critical: false },
+
+    { id: 'map-8', interfaceId: 'if-hris-dwh', sourceFieldId: 'f-hris-emp-id', targetFieldId: 'f-dwh-emp', transform: 'direct', critical: true },
+    { id: 'map-9', interfaceId: 'if-hris-dwh', sourceFieldId: 'f-hris-status', targetFieldId: 'f-dwh-status', transform: 'direct', critical: true },
+    { id: 'map-10', interfaceId: 'if-hris-dwh', sourceFieldId: 'f-hris-dept', targetFieldId: 'f-dwh-dept', transform: 'direct', critical: false },
+  ],
+}
