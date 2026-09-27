@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Functional and non-functional requirements for the SourceMap catalog prototype.
+What the SourceMap prototype must do — each FR maps to a view or function in the demo app.
 
 ## Functional requirements
 
@@ -32,8 +32,8 @@ Functional and non-functional requirements for the SourceMap catalog prototype.
 
 ## Constraints
 
-- Vite + React + TypeScript stack (portfolio standard for lightweight UI).
-- Analysis documents lead README; code validates the spec.
+- Stack: Vite + React + TypeScript (local seed, no backend).
+- Specs in `docs/` lead the README; the app proves the analysis.
 
 ## Requirements dependency view
 

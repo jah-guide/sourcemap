@@ -2,40 +2,39 @@
 
 ## Purpose
 
-Manual checklist to validate the portfolio demo against requirements.
+Manual checklist to confirm the demo matches requirements before a portfolio review.
 
-## Environment
+## Setup
 
-- Node.js 20+ recommended
-- Commands: `npm install`, `npm run dev`
-- Browser: Chrome or Edge (latest)
+- Node.js 20+
+- `npm install` then `npm run dev`
+- Latest Chrome or Edge
 
 ## Test cases
 
-| ID | Steps | Expected result | Req |
-|----|-------|-----------------|-----|
-| AT-01 | Open app → Systems catalog | ≥5 systems listed (HRIS, Payroll, LMS, CRM, DWH) with status badges | FR-01 |
-| AT-02 | Select HRIS | Field table includes `employee_id`, `work_email`, `employment_status`; PII shown for email | FR-02 |
-| AT-03 | Open Field mappings | ≥10 rows; each shows source → target | FR-03 |
-| AT-04 | Filter mappings with `payroll` | Only payroll-related rows remain | FR-04 |
-| AT-05 | Inspect any row | Interface name, protocol, frequency visible | FR-05 |
-| AT-06 | Impact → select `HRIS.employment_status` | Downstream includes Payroll, LMS, DWH fields | FR-06 |
-| AT-07 | Same field | Interface contracts list HRIS→Payroll, HRIS→LMS, HRIS→DWH with SLA minutes | FR-07 |
-| AT-08 | Review employment_status mappings | Critical = Yes on Payroll and LMS paths | FR-08 |
-| AT-09 | Disconnect network (optional) | App still loads (local seed) | FR-09 |
-| AT-10 | Click each nav tab | Systems, mappings, impact views render without error | FR-10 |
-| AT-11 | Fresh clone: install + dev | App serves on Vite default port | NFR-01 |
-| AT-12 | Keyboard: focus field row, Enter | Field selects and navigates to impact | NFR-04 |
+| ID | Do this | Expect | Req |
+|----|---------|--------|-----|
+| AT-01 | Open **Systems catalog** | ≥5 systems (HRIS, Payroll, LMS, CRM, DWH) with status | FR-01 |
+| AT-02 | Select HRIS | Fields include `employee_id`, `work_email`, `employment_status`; PII on email | FR-02 |
+| AT-03 | Open **Field mappings** | ≥10 rows with source → target | FR-03 |
+| AT-04 | Filter `payroll` | Payroll-related rows only | FR-04 |
+| AT-05 | Any mapping row | Interface name, protocol, frequency visible | FR-05 |
+| AT-06 | Impact → `HRIS.employment_status` | Downstream: Payroll, LMS, DWH | FR-06 |
+| AT-07 | Same field | Contracts list HRIS→Payroll, LMS, DWH with SLA minutes | FR-07 |
+| AT-08 | `employment_status` mappings | Critical on Payroll and LMS paths | FR-08 |
+| AT-09 | Offline (optional) | App still loads from local seed | FR-09 |
+| AT-10 | Each nav tab | All three views render | FR-10 |
+| AT-11 | Fresh clone: install + dev | Vite dev server starts | NFR-01 |
+| AT-12 | Keyboard: field row Enter | Navigates to impact | NFR-04 |
 
-## Happy-path script (recruiter demo)
+## Recruiter demo script (~3 min)
 
 ```mermaid
-flowchart TD
-  A[Start npm run dev] --> B[Systems: open HRIS]
-  B --> C[Click employment_status]
-  C --> D[Impact: review blast radius]
-  D --> E[Mappings: filter payroll]
-  E --> F[Done]
+flowchart LR
+  A[dev server] --> B[HRIS fields]
+  B --> C[employment_status → impact]
+  C --> D[Mappings: filter payroll]
+  D --> E[Done]
 ```
 
 ## Sign-off

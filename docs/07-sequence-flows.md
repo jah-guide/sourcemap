@@ -2,56 +2,48 @@
 
 ## Purpose
 
-Key runtime interactions in the **read-only demo UI** (local seed, no API).
+How the **read-only demo UI** loads seed data and responds to clicks (no API).
 
-## SF-01 — Application bootstrap
+## SF-01 — App load
 
 ```mermaid
 sequenceDiagram
   participant Browser
-  participant Vite as Vite dev server
-  participant App as React App
+  participant App as React app
   participant Seed as seed.ts
 
-  Browser->>Vite: GET /
-  Vite-->>Browser: bundle + index.html
-  Browser->>App: mount root
-  App->>Seed: load SourceMapCatalog
-  Seed-->>App: systems, fields, interfaces, mappings
-  App-->>Browser: Systems catalog view
+  Browser->>App: Load bundle
+  App->>Seed: Read catalog
+  Seed-->>App: systems, fields, mappings
+  App-->>Browser: Systems view
 ```
 
-## SF-02 — Select system and field
+## SF-02 — Pick system → field → impact
 
 ```mermaid
 sequenceDiagram
   participant User
   participant UI as SystemsCatalog
-  participant Cat as catalog state
+  participant State as app state
 
   User->>UI: Click HRIS
-  UI->>Cat: setSelectedSystemId(sys-hris)
-  Cat-->>UI: fields for HRIS
-  User->>UI: Click employment_status row
-  UI->>Cat: setSelectedFieldId + navigate impact
-  Cat-->>User: Impact view opens
+  UI->>State: selectedSystemId
+  User->>UI: Click employment_status
+  UI->>State: selectedFieldId + impact view
 ```
 
-## SF-03 — Compute impact analysis
+## SF-03 — Compute impact
 
 ```mermaid
 sequenceDiagram
   participant User
-  participant Impact as ImpactView
+  participant View as ImpactView
   participant Lib as catalog.ts
-  participant Data as seed catalog
 
-  User->>Impact: Select HRIS.employment_status
-  Impact->>Lib: computeImpact(catalog, fieldId)
-  Lib->>Data: traverse mappings downstream/upstream
-  Data-->>Lib: graph nodes + interfaces
-  Lib-->>Impact: ImpactNode[], contracts
-  Impact-->>User: metrics + blast radius + SLAs
+  User->>View: Select field
+  View->>Lib: computeImpact(catalog, fieldId)
+  Lib-->>View: nodes + contracts
+  View-->>User: metrics + blast radius
 ```
 
 ## SF-04 — Filter mappings
@@ -59,15 +51,12 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   participant User
-  participant Map as MappingTable
-  participant Idx as buildIndexes
+  participant Table as MappingTable
 
-  User->>Map: type filter "payroll"
-  Map->>Idx: resolve labels per row
-  Idx-->>Map: matching rows
-  Map-->>User: filtered table
+  User->>Table: Type filter text
+  Table-->>User: Matching rows only
 ```
 
-## Future-state sequence (out of demo scope)
+## Out of scope (future)
 
-Write-back of mapping edits would add validation, optimistic UI, and persistence (API or git-backed YAML). Documented for traceability to FR backlog.
+Editing mappings would add validation, persistence (API or git-backed YAML), and optimistic UI — tracked in the requirements backlog.

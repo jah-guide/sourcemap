@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Map requirements to design artifacts, implementation, and acceptance tests.
+One row per requirement — where it lives in docs, code, and manual tests.
 
 | Req ID | Design artifact | Implementation | Test (09) |
 |--------|-----------------|----------------|-----------|
