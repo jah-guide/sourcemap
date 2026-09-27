@@ -1,6 +1,6 @@
 import type { SourceMapCatalog } from '../types'
 
-/** Demo enterprise landscape — fictional names, representative integrations */
+/** Fictional enterprise landscape for portfolio demos — no real systems or PII. */
 export const seedCatalog: SourceMapCatalog = {
   systems: [
     {
@@ -79,7 +79,7 @@ export const seedCatalog: SourceMapCatalog = {
       protocol: 'REST',
       frequency: 'Every 15 minutes',
       slaMinutes: 30,
-      notes: 'Delta feed on employment_status and department changes.',
+      notes: 'Delta feed — employment_status changes drive pay eligibility (demo: watch impact on this field).',
     },
     {
       id: 'if-hris-lms',
@@ -89,7 +89,7 @@ export const seedCatalog: SourceMapCatalog = {
       protocol: 'Kafka',
       frequency: 'Near real-time',
       slaMinutes: 60,
-      notes: 'Creates/suspends learner accounts from work_email.',
+      notes: 'Provisions learners from work_email; status toggles account_active.',
     },
     {
       id: 'if-hris-crm',
