@@ -632,3 +632,108 @@ tbody tr[role='button']:hover,
   letter-spacing: 0.08em;
   color: var(--color-accent-strong);
 }
+
+/* Field mappings */
+.mapping-toolbar .toolbar-meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.toolbar-critical {
+  color: var(--color-critical);
+  font-weight: 600;
+}
+
+.mapping-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mapping-table tbody tr {
+  transition: background var(--motion-fast);
+}
+
+.mapping-table tbody tr:hover {
+  background: rgba(10, 15, 26, 0.03);
+}
+
+.row-critical {
+  background: rgba(196, 77, 58, 0.06);
+}
+
+.critical-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  background: var(--color-critical-bg);
+  color: var(--color-critical);
+}
+
+/* Impact analysis */
+.impact-eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-copper);
+}
+
+.impact-context {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.impact-metrics-cards {
+  grid-template-columns: 1fr 1fr;
+}
+
+.impact-metrics-cards .metric-wide {
+  grid-column: 1 / -1;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted-faint);
+  margin-bottom: 0.15rem;
+  font-weight: 650;
+}
+
+.impact-metrics-cards strong {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.impact-node {
+  animation: node-in var(--motion-medium) both;
+}
+
+@keyframes node-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.impact-empty .empty-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-strong);
+}
