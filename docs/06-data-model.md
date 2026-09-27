@@ -2,28 +2,23 @@
 
 ## Purpose
 
-Logical entities, relationships, and demo data dictionary for the catalog.
+Logical entities for the demo catalog — enough to read the UI and seed file, not a physical DDL.
 
-## Entity-relationship diagram
+## Core model
 
 ```mermaid
 erDiagram
-  SYSTEM ||--o{ FIELD : contains
-  SYSTEM ||--o{ INTERFACE_CONTRACT : source
-  SYSTEM ||--o{ INTERFACE_CONTRACT : target
-  INTERFACE_CONTRACT ||--o{ FIELD_MAPPING : includes
-  FIELD ||--o{ FIELD_MAPPING : source
-  FIELD ||--o{ FIELD_MAPPING : target
+  SYSTEM ||--o{ FIELD : has
+  SYSTEM ||--o{ INTERFACE : participates
+  INTERFACE ||--o{ FIELD_MAPPING : carries
+  FIELD ||--o{ FIELD_MAPPING : source_or_target
 
   SYSTEM {
     string id PK
-    string name
     string acronym
     string owner
-    string domain
     string status
   }
-
   FIELD {
     string id PK
     string systemId FK
@@ -31,15 +26,13 @@ erDiagram
     string dataType
     boolean pii
   }
-
-  INTERFACE_CONTRACT {
+  INTERFACE {
     string id PK
     string sourceSystemId FK
     string targetSystemId FK
     string protocol
     int slaMinutes
   }
-
   FIELD_MAPPING {
     string id PK
     string interfaceId FK
@@ -50,50 +43,26 @@ erDiagram
   }
 ```
 
-## Data dictionary (excerpt)
+## Field cheat sheet
 
-### System
-
-| Attribute | Description |
-|-----------|-------------|
-| id | Stable key (e.g. `sys-hris`) |
-| acronym | Short label shown in UI |
-| status | production \| staging \| deprecated |
-
-### Field
-
-| Attribute | Description |
-|-----------|-------------|
-| name | Physical/logical column name in source system |
-| dataType | UUID, string, enum, date, boolean |
-| pii | Marks fields requiring privacy review |
-
-### Interface contract
-
-| Attribute | Description |
-|-----------|-------------|
-| protocol | REST, SFTP, Kafka, DB sync |
-| frequency | Human-readable schedule |
-| slaMinutes | Recovery target for stale feeds |
-
-### Field mapping
-
-| Attribute | Description |
-|-----------|-------------|
-| transform | Direct copy or expression (demo text) |
-| critical | When true, highlighted on impact summary |
-
-## Seed landscape summary
-
-| System | Role in demo |
+| Entity | What it stores |
 |--------|----------------|
+| **System** | App or platform in the landscape (`sys-hris`, acronym, owner, status) |
+| **Field** | Column/attribute on a system (type, PII flag, description) |
+| **Interface** | Feed between two systems (protocol, schedule, SLA minutes) |
+| **Field mapping** | One source field → one target field on an interface (+ transform, critical) |
+
+## Seed systems (demo)
+
+| Acronym | Role |
+|---------|------|
 | HRIS | System of record |
-| Payroll | Compensation eligibility |
+| Payroll | Pay eligibility |
 | LMS | Provisioning via email |
-| CRM | Sales roster / territory |
+| CRM | Sales roster |
 | DWH | Analytics dimension |
 
-## Key lineage (employment_status)
+## Example lineage — `employment_status`
 
 ```mermaid
 flowchart LR
@@ -102,7 +71,7 @@ flowchart LR
   L[LMS.account_active]
   D[DWH.employment_status]
 
-  H -->|REST critical| P
-  H -->|Kafka critical| L
-  H -->|DB sync critical| D
+  H -->|REST · critical| P
+  H -->|Kafka · critical| L
+  H -->|DB sync · critical| D
 ```
