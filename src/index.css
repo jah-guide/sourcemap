@@ -1,9 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
 :root {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
+  /* Ink + lime data-catalog palette */
+  --color-ink: #0a0f1a;
+  --color-ink-soft: #141c2e;
+  --color-surface: #e8ecf2;
+  --color-surface-raised: #f7f9fc;
+  --color-panel: #ffffff;
+  --color-border: #c5ced9;
+  --color-border-subtle: #dde3eb;
+  --color-muted: #5a6578;
+  --color-muted-faint: #8b95a5;
+
+  --color-accent: #b5e048;
+  --color-accent-strong: #9cc832;
+  --color-accent-ink: #1a2408;
+  --color-copper: #d4845a;
+  --color-copper-soft: #f3e8e0;
+
+  --color-critical: #c44d3a;
+  --color-critical-bg: #fcecea;
+  --color-success: #1f6b4a;
+  --color-success-bg: #e4f5ec;
+
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-panel: 0 1px 0 rgba(10, 15, 26, 0.06), 0 8px 24px rgba(10, 15, 26, 0.06);
+  --shadow-header: 0 12px 40px rgba(10, 15, 26, 0.22);
+
+  --motion-fast: 140ms ease;
+  --motion-medium: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  font-family: var(--font-sans);
+  line-height: 1.55;
   font-weight: 400;
-  color: #0f172a;
-  background-color: #f1f5f9;
+  color: var(--color-ink);
+  background-color: var(--color-surface);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -19,6 +56,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background:
+    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(181, 224, 72, 0.12), transparent 50%),
+    radial-gradient(ellipse 80% 60% at -10% 100%, rgba(212, 132, 90, 0.08), transparent 45%),
+    var(--color-surface);
 }
 
 #root {
@@ -32,6 +73,21 @@ select {
 }
 
 code {
-  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
-  font-size: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  font-weight: 500;
+}
+
+::selection {
+  background: rgba(181, 224, 72, 0.45);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
