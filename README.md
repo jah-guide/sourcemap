@@ -1,5 +1,7 @@
 # SourceMap
 
+**Live demo:** [jah-guide.github.io/sourcemap](https://jah-guide.github.io/sourcemap/)
+
 **Systems Analyst portfolio** — inventory, field-level integration mappings, interface contracts, and change impact analysis (*what breaks if field X changes?*).
 
 ## Problem
