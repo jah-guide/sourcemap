@@ -2,55 +2,50 @@
 
 ## Purpose
 
-Contrast today’s ad-hoc integration documentation with a catalog-driven change impact process.
+Show why a field catalog beats hunting spreadsheets when a schema change lands.
 
-## As-is process (pain)
-
-```mermaid
-flowchart TD
-  CR[Change request: rename field] --> TICKET[Ticket to integration team]
-  TICKET --> SPREAD[Search spreadsheets / wiki]
-  SPREAD --> GUESS[Best-guess affected systems]
-  GUESS --> FIX[Emergency fixes in prod]
-  FIX --> INC[Incident or payroll defect]
-```
-
-**Problems:** Late discovery, duplicate mappings undocumented, no single field glossary.
-
-## To-be process (target)
+## As-is (today)
 
 ```mermaid
-flowchart TD
-  CR[Change request] --> SM[SourceMap: locate field]
-  SM --> IMP[Run impact analysis]
-  IMP --> CAB{Critical mappings?}
-  CAB -->|Yes| REVIEW[Change advisory + owner sign-off]
-  CAB -->|No| PLAN[Test plan from blast radius]
-  REVIEW --> PLAN
-  PLAN --> BUILD[Update interfaces / transforms]
-  BUILD --> VERIFY[Verify against mapping table]
-  VERIFY --> CLOSE[Close CR with traceability]
+flowchart LR
+  CR[Change request] --> HUNT[Search wiki / sheets]
+  HUNT --> GUESS[Guess affected systems]
+  GUESS --> FIX[Hotfix in prod]
+  FIX --> INC[Incident]
 ```
 
-## Swimlane (to-be)
+**Pain:** Late discovery, duplicate mappings, no shared field glossary.
+
+## To-be (with SourceMap)
+
+```mermaid
+flowchart LR
+  CR[Change request] --> SM[Find field in catalog]
+  SM --> IMP[Impact analysis]
+  IMP --> PLAN[Test plan + owners]
+  PLAN --> SHIP[Update interfaces]
+  SHIP --> DONE[Close with traceability]
+```
+
+**Gain:** Blast radius and contracts before code changes.
+
+## Who does what (to-be)
 
 ```mermaid
 sequenceDiagram
   participant Owner as System Owner
-  participant SA as Systems Analyst
+  participant SA as Analyst
   participant SM as SourceMap
-  participant INT as Integration Eng
+  participant Eng as Integration
 
-  Owner->>SA: Proposed schema change
-  SA->>SM: Select field + impact view
-  SM-->>SA: Blast radius + contracts
-  SA->>Owner: Review affected systems
-  SA->>INT: Work order with mapping IDs
-  INT->>SM: Confirm mapping updates (future state)
-  INT-->>SA: Deployment complete
-  SA->>Owner: Close change with evidence
+  Owner->>SA: Schema change idea
+  SA->>SM: Select field → impact
+  SM-->>SA: Mappings + SLAs
+  SA->>Eng: Work order with mapping IDs
+  Eng-->>SA: Deploy + verify
+  SA->>Owner: Sign-off with evidence
 ```
 
-## Demo scope note
+## Demo scope
 
-The prototype implements **catalog + impact read paths** only. Workflow tickets, CAB automation, and write-back to a governance database are future phases documented here for process completeness.
+The app covers **read-only catalog + impact**. Tickets, CAB automation, and write-back to a governance DB are documented here as future phases.
