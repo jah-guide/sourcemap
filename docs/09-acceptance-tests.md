@@ -26,6 +26,19 @@ Manual checklist to confirm the demo matches requirements before a portfolio rev
 | AT-10 | Each nav tab | All three views render | FR-10 |
 | AT-11 | Fresh clone: install + dev | Vite dev server starts | NFR-01 |
 | AT-12 | Keyboard: field row Enter | Navigates to impact | NFR-04 |
+| AT-13 | Systems search `hris` | HRIS card only in sidebar | FR-11 |
+| AT-14 | HRIS field search `email` | `work_email` row visible | FR-12 |
+| AT-15 | Mappings: Critical only + Kafka | Rows match both filters | FR-13 |
+| AT-16 | Export CSV with filter active | Downloaded file matches visible rows | FR-14 |
+| AT-17 | Compare HRIS vs Payroll | Cross mapping count > 0 | FR-15 |
+| AT-18 | Pin field, reload page | Pin persists in header strip | FR-16 |
+| AT-19 | Mapping row → interface name | Drawer shows protocol and SLA | FR-17 |
+| AT-20 | Impact `employment_status` | Critical path badge on Payroll hop | FR-18 |
+| AT-21 | Spotlight `work_email` | Opens impact for HRIS.work_email | FR-19 |
+| AT-22 | Visit two fields, reload | Recent strip shows last fields | FR-20 |
+| AT-23 | Status **staging** only | Sidebar hides production systems | FR-21 |
+| AT-24 | System card meta | Unmapped count when integration gaps exist | FR-22 |
+| AT-25 | Copy impact report | Clipboard markdown includes blast radius | FR-23 |
 
 ## Recruiter demo script (~3 min)
 

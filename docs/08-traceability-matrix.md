@@ -16,6 +16,19 @@ One row per requirement — where it lives in docs, code, and manual tests.
 | FR-08 | 03-FR-08 | `mapping.critical` | AT-08 |
 | FR-09 | 01-scope | `src/data/seed.ts` | AT-09 |
 | FR-10 | 04-journey | `Layout` nav + `App.tsx` | AT-10 |
+| FR-11 | 04-US-06 | `filterSystemsByQuery`, `SystemsCatalog` | AT-13 |
+| FR-12 | 04-US-06 | `filterFieldsByQuery` | AT-14 |
+| FR-13 | 03-FR-13 | `MappingTable` chips | AT-15 |
+| FR-14 | 04-UC-05 | `lib/export.ts` | AT-16 |
+| FR-15 | 04-UC-04 | `SystemComparePanel`, `lib/compare.ts` | AT-17 |
+| FR-16 | 04-UC-06 | `lib/bookmarks.ts`, pin UI | AT-18 |
+| FR-17 | 03-FR-17 | `InterfaceDrawer` | AT-19 |
+| FR-18 | 03-FR-18 | `criticalPathFieldIds`, impact nodes | AT-20 |
+| FR-19 | 04-UC-07 | `FieldSpotlight` | AT-21 |
+| FR-20 | 03-FR-20 | `lib/recent.ts`, recent strip | AT-22 |
+| FR-21 | 03-FR-21 | `filterSystemsByStatus` | AT-23 |
+| FR-22 | 03-FR-22 | `unmappedFieldCount` | AT-24 |
+| FR-23 | 04-UC-03 | `lib/impactReport.ts` | AT-25 |
 | NFR-01 | README | Vite scripts | AT-11 |
 | NFR-04 | 04-US | keyboard row on field table | AT-12 |
 

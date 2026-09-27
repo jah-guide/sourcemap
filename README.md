@@ -34,9 +34,10 @@ Vite + React + TypeScript — **local seed only** (`src/data/seed.ts`), no backe
 
 | View | What to try |
 |------|-------------|
-| **Systems catalog** | HRIS → `employment_status` (opens impact) |
-| **Field mappings** | Filter `payroll` or `kafka` |
-| **Impact analysis** | Blast radius + interface SLAs for selected field |
+| **Systems catalog** | Status chips, unmapped counts; search; pin ☆; compare HRIS vs Payroll |
+| **Field mappings** | Text filter + **Critical only** + protocol; **Export JSON/CSV** |
+| **Impact analysis** | Critical path; **Copy impact report**; interface drawer |
+| **Header** | **Spotlight** any field; **Recent** + **Pinned** quick jumps |
 
 ### Quick start
 

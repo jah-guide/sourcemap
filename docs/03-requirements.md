@@ -18,6 +18,19 @@ What the SourceMap prototype must do — each FR maps to a view or function in t
 | FR-08 | Flag mappings as critical for change-advisory emphasis | Should |
 | FR-09 | Seed demo data locally (no backend) | Must |
 | FR-10 | Navigate between catalog, mappings, and impact views | Must |
+| FR-11 | Search/filter systems in the catalog sidebar | Should |
+| FR-12 | Search/filter fields within a selected system inventory | Should |
+| FR-13 | Filter mappings by critical-only and by interface protocol | Should |
+| FR-14 | Export visible mapping rows as JSON or CSV download | Should |
+| FR-15 | Compare two systems for shared interfaces and cross mappings | Could |
+| FR-16 | Pin/bookmark fields (persisted in browser localStorage) | Could |
+| FR-17 | Open interface contract detail drawer from mappings or impact | Should |
+| FR-18 | Highlight critical downstream path on impact blast radius | Should |
+| FR-19 | Global field spotlight — jump to impact from any field | Should |
+| FR-20 | Recent fields strip (localStorage) for repeat analysis | Could |
+| FR-21 | Filter systems catalog by production/staging/deprecated | Should |
+| FR-22 | Show unmapped field count per system in catalog | Could |
+| FR-23 | Copy markdown impact report to clipboard | Should |
 
 ## Non-functional requirements
 
@@ -50,4 +63,17 @@ flowchart TD
   FR10[FR-10 Navigation] --> FR02
   FR10 --> FR03
   FR10 --> FR06
+  FR11[FR-11 System search] --> FR02
+  FR12[FR-12 Field search] --> FR02
+  FR13[FR-13 Mapping filters] --> FR04
+  FR14[FR-14 Export] --> FR03
+  FR15[FR-15 Compare] --> FR01
+  FR16[FR-16 Pins] --> FR02
+  FR17[FR-17 Interface drawer] --> FR05
+  FR18[FR-18 Critical path] --> FR06
+  FR19[FR-19 Spotlight] --> FR06
+  FR20[FR-20 Recent] --> FR06
+  FR21[FR-21 Status filter] --> FR01
+  FR22[FR-22 Unmapped hint] --> FR02
+  FR23[FR-23 Impact report] --> FR06
 ```
