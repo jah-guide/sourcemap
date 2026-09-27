@@ -107,3 +107,93 @@ export function fieldsForSystem(
 ): FieldRecord[] {
   return catalog.fields.filter((f) => f.systemId === systemId)
 }
+
+export type SystemStatusFilter = 'all' | SystemRecord['status']
+
+export function filterSystemsByStatus(
+  systems: SystemRecord[],
+  status: SystemStatusFilter,
+): SystemRecord[] {
+  if (status === 'all') return systems
+  return systems.filter((system) => system.status === status)
+}
+
+export function filterSystemsByQuery(
+  catalog: SourceMapCatalog,
+  query: string,
+): SystemRecord[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return catalog.systems
+  return catalog.systems.filter((system) => {
+    const hay = [
+      system.name,
+      system.acronym,
+      system.owner,
+      system.domain,
+      system.status,
+    ]
+      .join(' ')
+      .toLowerCase()
+    return hay.includes(q)
+  })
+}
+
+export function filterFieldsByQuery(
+  fields: FieldRecord[],
+  query: string,
+): FieldRecord[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return fields
+  return fields.filter((field) => {
+    const hay = [field.name, field.dataType, field.description]
+      .join(' ')
+      .toLowerCase()
+    return hay.includes(q)
+  })
+}
+
+/** Field IDs reachable from origin following only critical downstream hops. */
+export function criticalPathFieldIds(
+  catalog: SourceMapCatalog,
+  fieldId: FieldId,
+): Set<FieldId> {
+  const { fieldById } = buildIndexes(catalog)
+  const onPath = new Set<FieldId>([fieldId])
+
+  function walk(sourceId: FieldId) {
+    for (const mapping of catalog.mappings) {
+      if (!mapping.critical || mapping.sourceFieldId !== sourceId) continue
+      const target = fieldById.get(mapping.targetFieldId)
+      if (!target || onPath.has(target.id)) continue
+      onPath.add(target.id)
+      walk(target.id)
+    }
+  }
+
+  walk(fieldId)
+  return onPath
+}
+
+/** Fields in a system with no mapping touching any other system. */
+export function unmappedFieldCount(
+  catalog: SourceMapCatalog,
+  systemId: string,
+): number {
+  const systemFieldIds = new Set(
+    catalog.fields.filter((f) => f.systemId === systemId).map((f) => f.id),
+  )
+  const linked = new Set<string>()
+  for (const mapping of catalog.mappings) {
+    const sourceIn = systemFieldIds.has(mapping.sourceFieldId)
+    const targetIn = systemFieldIds.has(mapping.targetFieldId)
+    if (sourceIn && !targetIn) linked.add(mapping.sourceFieldId)
+    if (targetIn && !sourceIn) linked.add(mapping.targetFieldId)
+    if (sourceIn && targetIn) {
+      linked.add(mapping.sourceFieldId)
+      linked.add(mapping.targetFieldId)
+    }
+  }
+  return catalog.fields.filter(
+    (f) => f.systemId === systemId && !linked.has(f.id),
+  ).length
+}
