@@ -205,10 +205,28 @@ export function MappingTable({
         </table>
       </div>
       {rows.length === 0 && (
-        <p className="empty-inline">
-          No mappings match the current filters — try clearing protocol or critical
-          filters.
-        </p>
+        <div className="empty-state mapping-empty" role="status">
+          <p className="empty-kicker">No rows in view</p>
+          <h3>No mappings match your filters</h3>
+          <p>
+            {catalog.mappings.length === 0
+              ? 'The seed catalog has no mappings yet.'
+              : 'Try a shorter search term or relax protocol and critical filters.'}
+          </p>
+          {(filter.trim() || criticalOnly || protocol !== 'all') && (
+            <button
+              type="button"
+              className="ghost-btn empty-reset-btn"
+              onClick={() => {
+                onFilterChange('')
+                onCriticalOnlyChange(false)
+                onProtocolChange('all')
+              }}
+            >
+              Clear all filters
+            </button>
+          )}
+        </div>
       )}
     </section>
   )

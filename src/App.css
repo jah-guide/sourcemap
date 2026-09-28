@@ -841,6 +841,25 @@ tbody tr[role='button']:hover,
   color: var(--color-accent-strong);
 }
 
+.mapping-empty h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+}
+
+.empty-reset-btn {
+  margin-top: 0.85rem;
+}
+
+.mapping-empty .empty-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-strong);
+}
+
 .impact-empty .empty-kicker {
   margin: 0 0 0.35rem;
   font-size: 0.68rem;
