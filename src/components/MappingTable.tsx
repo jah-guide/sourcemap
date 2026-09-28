@@ -80,10 +80,13 @@ export function MappingTable({
   }
 
   return (
-    <section className="panel panel-full mapping-panel">
+    <section
+      className="panel panel-full mapping-panel"
+      aria-labelledby="mappings-heading"
+    >
       <div className="panel-toolbar mapping-toolbar">
         <div>
-          <h2>Field-level mappings</h2>
+          <h2 id="mappings-heading">Field-level mappings</h2>
           <p className="toolbar-meta">
             {rows.length} of {catalog.mappings.length} rows
             {criticalCount > 0 && (

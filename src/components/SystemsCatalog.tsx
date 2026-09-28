@@ -53,7 +53,7 @@ export function SystemsCatalog({
     : []
 
   return (
-    <div className="split-panel catalog-layout">
+    <div className="split-panel catalog-layout" data-view="catalog">
       <section className="panel catalog-sidebar">
         <div className="panel-heading-row">
           <h2>Registered systems</h2>

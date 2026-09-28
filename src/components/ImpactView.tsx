@@ -53,7 +53,7 @@ export function ImpactView({
   ).length
 
   return (
-    <div className="split-panel impact-layout">
+    <div className="split-panel impact-layout" data-view="impact">
       <section className="panel impact-controls">
         <p className="impact-eyebrow">Change advisory</p>
         <h2>What breaks if this field changes?</h2>
