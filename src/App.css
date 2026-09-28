@@ -203,12 +203,103 @@
 }
 
 @media (max-width: 800px) {
+  .app-shell {
+    padding: 1rem 0.85rem 2rem;
+    gap: 1rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    padding: 1.1rem 1.15rem;
+  }
+
+  .header-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .stat-chip {
+    flex: 1 1 calc(33% - 0.5rem);
+    min-width: 0;
+  }
+
   .split-panel {
     grid-template-columns: 1fr;
   }
 
+  .catalog-layout .catalog-sidebar {
+    order: 1;
+  }
+
+  .catalog-layout .catalog-detail {
+    order: 2;
+    min-height: 280px;
+  }
+
+  .impact-layout .impact-controls {
+    order: 1;
+  }
+
+  .impact-layout .impact-results {
+    order: 2;
+  }
+
   .app-nav {
     grid-template-columns: 1fr;
+  }
+
+  .mapping-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mapping-toolbar-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mapping-toolbar-actions .search-input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-chips,
+  .export-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .impact-metrics,
+  .impact-metrics-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .role-downstream,
+  .role-upstream {
+    margin-left: 0.35rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text h1 {
+    font-size: 1.35rem;
+  }
+
+  .table-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-wrap::after {
+    content: 'Scroll for more columns →';
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted-faint);
+    padding: 0.35rem 0.65rem;
+    text-align: center;
+    border-top: 1px dashed var(--color-border-subtle);
+    background: var(--color-surface-raised);
   }
 }
 
