@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { buildIndexes } from '../lib/catalog'
 import type { InterfaceContract, SourceMapCatalog } from '../types'
 
@@ -12,10 +13,20 @@ export function InterfaceDrawer({
   interfaceId,
   onClose,
 }: InterfaceDrawerProps) {
-  if (!interfaceId) return null
+  const contract = interfaceId
+    ? catalog.interfaces.find((i) => i.id === interfaceId)
+    : undefined
 
-  const contract = catalog.interfaces.find((i) => i.id === interfaceId)
-  if (!contract) return null
+  useEffect(() => {
+    if (!interfaceId) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [interfaceId, onClose])
+
+  if (!interfaceId || !contract) return null
 
   const { systemById } = buildIndexes(catalog)
   const mappingCount = catalog.mappings.filter(
@@ -27,6 +38,7 @@ export function InterfaceDrawer({
       <aside
         className="interface-drawer"
         role="dialog"
+        aria-modal="true"
         aria-labelledby="iface-drawer-title"
         onClick={(e) => e.stopPropagation()}
       >

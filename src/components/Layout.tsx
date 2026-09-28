@@ -40,6 +40,9 @@ export function Layout({
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to analyst views
+      </a>
       <header className="app-header">
         <div className="brand">
           <span className="brand-mark" aria-hidden>
@@ -143,7 +146,9 @@ export function Layout({
         ))}
       </nav>
 
-      <main className="app-main">{children}</main>
+      <main id="main-content" className="app-main" tabIndex={-1}>
+        {children}
+      </main>
 
       <footer className="app-footer">
         Portfolio demo — typed seed data only. No live integrations or PII.

@@ -822,6 +822,25 @@ tbody tr[role='button']:hover,
   }
 }
 
+.mapping-empty h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+}
+
+.empty-reset-btn {
+  margin-top: 0.85rem;
+}
+
+.mapping-empty .empty-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-strong);
+}
+
 .impact-empty .empty-kicker {
   margin: 0 0 0.35rem;
   font-size: 0.68rem;
@@ -1121,6 +1140,40 @@ tbody tr[role='button']:hover,
   padding: 0.12rem 0.4rem;
   border-radius: 999px;
   align-self: flex-start;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 200;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: #f0f3f8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-140%);
+  transition: transform var(--motion-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.nav-btn:focus-visible,
+.card-btn:focus-visible,
+.ghost-btn:focus-visible,
+.pin-btn:focus-visible,
+.status-filter:focus-visible,
+.pinned-chip:focus-visible,
+.spotlight-option:focus-visible,
+.drawer-close:focus-visible {
+  outline: 2px solid var(--color-accent-strong);
+  outline-offset: 2px;
 }
 
 .visually-hidden {
