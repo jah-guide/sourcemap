@@ -57,6 +57,20 @@ npm run build
 npm run preview
 ```
 
+### GitHub Pages (live demo)
+
+The public demo at [jah-guide.github.io/sourcemap](https://jah-guide.github.io/sourcemap/) is built with the same base path Vite expects on Pages:
+
+```bash
+# Windows PowerShell
+$env:VITE_BASE="/sourcemap/"; npm run build
+
+# macOS / Linux
+VITE_BASE=/sourcemap/ npm run build
+```
+
+Pushes to `main` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml), which sets `VITE_BASE=/sourcemap/` and publishes the `dist/` folder to GitHub Pages.
+
 ## Stack
 
 - Vite 8, React 19, TypeScript 6

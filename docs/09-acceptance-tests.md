@@ -39,6 +39,9 @@ Manual checklist to confirm the demo matches requirements before a portfolio rev
 | AT-23 | Status **staging** only | Sidebar hides production systems | FR-21 |
 | AT-24 | System card meta | Unmapped count when integration gaps exist | FR-22 |
 | AT-25 | Copy impact report | Clipboard markdown includes blast radius | FR-23 |
+| AT-26 | Tab to skip link, activate | Focus moves to main analyst view | NFR-04 |
+| AT-27 | Open interface drawer, press Escape | Drawer closes, page scroll restored | NFR-04 |
+| AT-28 | Mappings: filters with zero rows | Empty state offers **Clear all filters** | FR-13 |
 
 ## Recruiter demo script (~3 min)
 
